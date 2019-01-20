@@ -1,9 +1,9 @@
 pipeline {
   agent none
   stages {
-    stage('A') {
+    stage('Build') {
       parallel {
-        stage('Build') {
+        stage('Parallel-A') {
           agent {
             docker {
               image 'maven:3-alpine'
@@ -17,7 +17,7 @@ pipeline {
             sleep 15
           }
         }
-        stage('B') {
+        stage('Parallel-B') {
           agent {
             node {
               label 'master'
@@ -30,9 +30,14 @@ pipeline {
         }
       }
     }
-    stage('Publish') {
+    stage('Ansible') {
+      agent{
+        node{
+          label 'slave'
+        }
+      }
       steps {
-        echo 'Publish'
+        ansiblePlaybook(playbook: 'play.yml')
       }
     }
     stage('Deploy-Dev') {

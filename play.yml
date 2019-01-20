@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: "Hello world"
+      shell: 'echo "Hello world from Ansible in $(hostname)"'
