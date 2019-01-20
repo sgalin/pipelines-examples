@@ -13,7 +13,7 @@ pipeline {
           steps {
             sh 'echo "Hello World $(hostname)"'
             sleep 2
-            sh ./test.sh
+            sh './test.sh'
           }
         }
         stage('parallel') {
