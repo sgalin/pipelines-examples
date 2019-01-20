@@ -13,7 +13,11 @@ pipeline {
           steps {
             sh 'echo "Hello World $(hostname)"'
             sleep 2
-            sh './test.sh'
+            sh '''
+                ls -ltra
+                chmod +x ./test.sh
+                ./test.sh
+              '''
           }
         }
         stage('parallel') {
