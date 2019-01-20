@@ -1,15 +1,15 @@
 pipeline {
-  agent {
-    docker {
-      label 'slave'
-      image 'maven:3-alpine'
-    }
-
-  }
+  agent none
   stages {
     stage('Build') {
       parallel {
         stage('Build') {
+          agent {
+            docker {
+              image 'maven:3-alpine'
+              label 'slave'
+            }
+          }
           steps {
             sh 'echo "Hello World $(hostname)"'
             sleep 2
