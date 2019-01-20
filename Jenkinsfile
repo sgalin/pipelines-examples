@@ -32,7 +32,7 @@ pipeline {
     }
     stage('Publish') {
       steps {
-        archiveArtifacts 'py'
+        echo 'Publish'
       }
     }
     stage('Deploy-Dev') {
