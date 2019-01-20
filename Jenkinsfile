@@ -14,7 +14,7 @@ pipeline {
           steps {
             sleep 2
             echo 'Parallel A'
-            sleep 15
+            sleep 2
           }
         }
         stage('Parallel-B') {
