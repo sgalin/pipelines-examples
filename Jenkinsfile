@@ -1,7 +1,7 @@
 pipeline {
   agent none
   stages {
-    stage('Build') {
+    stage('A') {
       parallel {
         stage('Build') {
           agent {
@@ -9,18 +9,15 @@ pipeline {
               image 'maven:3-alpine'
               label 'slave'
             }
+
           }
           steps {
-            sh 'echo "Hello World $(hostname)"'
             sleep 2
-            sh '''
-                ls -ltra
-                chmod +x ./test.sh
-                ./test.sh
-              '''
+            echo 'Parallel A'
+            sleep 15
           }
         }
-        stage('parallel') {
+        stage('B') {
           agent {
             node {
               label 'master'
@@ -28,10 +25,29 @@ pipeline {
 
           }
           steps {
-            sh 'echo "Hello $(hostname)"'
-            echo 'paralelo'
+            echo 'Parallel B'
           }
         }
+      }
+    }
+    stage('Publish') {
+      steps {
+        archiveArtifacts 'py'
+      }
+    }
+    stage('Deploy-Dev') {
+      steps {
+        echo 'Deploy-Dev'
+      }
+    }
+    stage('Deploy-UAT') {
+      steps {
+        echo 'Deploy-UAT'
+      }
+    }
+    stage('Deploy-PRO') {
+      steps {
+        echo 'Deploy-PRO'
       }
     }
   }
